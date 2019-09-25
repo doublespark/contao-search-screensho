@@ -1,0 +1,33 @@
+{
+  "name": "doublespark/contao-search-screenshot",
+  "type": "contao-bundle",
+  "description": "Adds page preview screenshot to Contao search results",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Jamie Devine",
+      "homepage": "https://www.doublespark.co.uk"
+    }
+  ],
+  "require": {
+    "php": ">=7.1",
+    "contao/core-bundle": "^4.0",
+    "jakoch/phantomjs-installer": "^2.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Doublespark\\ContaoSearchScreenshot\\": "src/"
+    }
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "PhantomInstaller\\Installer::installPhantomJS"
+    ],
+    "post-update-cmd": [
+      "PhantomInstaller\\Installer::installPhantomJS"
+    ]
+  },
+  "extra": {
+    "contao-manager-plugin": "Doublespark\\ContaoSearchScreenshot\\ContaoManager\\Plugin"
+  }
+}

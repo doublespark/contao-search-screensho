@@ -1,0 +1,131 @@
+<div id="tl_buttons">
+    <a href="<?= $this->href ?>" class="header_back" title="<?= $this->title ?>"><?= $this->button ?></a>
+</div>
+
+<div id="tl_search_screenshots">
+
+    <form id="searchScreenshotForm" action="contao?do=search_screenshots&amp;ref=<?= $this->ref; ?>" class="tl_form" method="post">
+
+        <div class="tl_submit_container" style="background:none;">
+            <button type="submit" name="search_screenshots" class="tl_submit generateSelected">Generate selected</button>
+        </div>
+
+        <div style="display:none;" class="generating-message">
+            <p style="padding-left:15px;">Generating screenshots, please wait...</p>
+        </div>
+
+        <div class="content">
+            <?php if(count($this->arrSearchIndex) > 0): ?>
+            <table width="100%" border="0">
+                <thead>
+                    <tr>
+                        <th width="100">Screenshot</th>
+                        <th>Page</th>
+                        <th>URL</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach($this->arrSearchIndex as $row): ?>
+                        <tr class="row-checked">
+                            <td class="screenshot" align="center" valign="center"><?php if(empty($row['screenshot'])):?>- None -<?php else: ?><img style="width:100%;height:auto;" src="<?= $row['screenshot']; ?>" /><?php endif; ?></td>
+                            <td valign="center"><?= $row['title']; ?></td>
+                            <td valign="center"><?= $row['url']; ?></td>
+                            <td class="action-col" valign="center"><input class="checkbox-input" type="checkbox" name="pages" checked="checked" value="<?= $row['id']; ?>"/></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+            <?php else: ?>
+                <p>The search index is currently empty. Please build the search index from the <a href="contao?do=maintenance&ref=<?= $this->ref; ?>">Maintenance</a> section first.</p>
+            <?php endif; ?>
+        </div>
+
+        <div class="tl_formbody_edit">
+            <input type="hidden" name="FORM_SUBMIT" value="generate_screenshots">
+            <input type="hidden" name="REQUEST_TOKEN" value="<?= $this->rt; ?>">
+        </div>
+
+        <div class="tl_submit_container">
+            <button type="submit" name="search_screenshots" class="tl_submit generateSelected">Generate selected</button>
+        </div>
+    </form>
+
+</div>
+<style>
+    #tl_search_screenshots table { border-collapse:collapse; border:none; }
+    #tl_search_screenshots td { height:74px; }
+    #tl_search_screenshots th { background:#f7f6f6; }
+    #tl_search_screenshots th,
+    #tl_search_screenshots td { border:1px solid #EFEFEF; padding:10px; border-collapse:collapse; }
+    #tl_search_screenshots td.screenshot { text-align:center; }
+    #tl_search_screenshots td.screenshot span { font-size:11px; }
+    #tl_search_screenshots form button { float:right; margin-left:15px; }
+    #tl_search_screenshots .tl_submit_container { overflow:hidden; }
+    #tl_search_screenshots .action-col { text-align:center; }
+    #tl_search_screenshots .action-col input { display:inline-block; }
+    #tl_search_screenshots table tr:hover { cursor: pointer; }
+    #tl_search_screenshots table tr.row-checked td {  background:#f2fff4; }
+</style>
+<script>
+    $$('#tl_search_screenshots table tr').addEvent('click', function(){
+        this.getElement('input').checked = !this.getElement('input').checked;
+        if(this.getElement('input').checked)
+        {
+            this.addClass('row-checked');
+        }
+        else
+        {
+            this.removeClass('row-checked');
+        }
+    });
+
+    var values = [];
+
+    $$('button.generateSelected').addEvent('click', function(e){
+
+        values = $$('.checkbox-input:checked').map(function(el){ return el.value; });
+
+        generateScreenshots();
+
+        e.preventDefault();
+    });
+
+    function generateScreenshots()
+    {
+        $$('.generating-message').show();
+
+        if(values.length === 0)
+        {
+            location.reload();
+            return false;
+        }
+
+        if(values.length > 2)
+        {
+            var ids = values.splice(0, 2)
+        }
+        else
+        {
+            var ids = values;
+            values = [];
+        }
+
+        var myRequest = new Request({
+            url: 'contao?do=search_screenshots&ref=<?= $this->ref; ?>&generate_screenshots=1&ids=' + ids.join(','),
+            method: 'get',
+            onRequest: function(){
+
+            },
+            onSuccess: function(responseText){
+                generateScreenshots();
+            },
+            onFailure: function(){
+
+            }
+        });
+
+        myRequest.send();
+    }
+
+</script>

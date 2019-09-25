@@ -1,0 +1,5 @@
+.DS_STORE
+.idea
+error_log
+src/Resources/public/img/*.png
+src/Resources/public/img/*.jpg
