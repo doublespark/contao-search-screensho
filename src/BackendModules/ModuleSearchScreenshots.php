@@ -40,13 +40,11 @@ class ModuleSearchScreenshots extends BackendModule {
 
         $container = System::getContainer();
         $ref = $container->get('request_stack')->getCurrentRequest()->attributes->get('_contao_referer_id');
-        $rt = $container->get('contao.csrf.token_manager')->getToken($container->getParameter('contao.csrf_token_name'))->getValue();
 
         $objSearchIndex = $this->Database->query('SELECT id, title, url, screenshot_last_updated, screenshot FROM tl_search');
 
         $this->Template->arrSearchIndex = $objSearchIndex->fetchAllAssoc();
 
-        $this->Template->rt = $rt;
         $this->Template->ref = $ref;
         $this->Template->href = $this->getReferer(true);
         $this->Template->title = 'Search result screenshots';
