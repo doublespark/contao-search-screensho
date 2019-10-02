@@ -24,3 +24,7 @@ Version 1.0.4 (2019-10-02)
 - Add flags to PhantomJS command to help dealing with errors
 - Fixed issue with pages that have broken resources
 
+Version 1.0.5 (2019-10-02)
+--------------------------
+- Make jakoch/phantomjs-installer a suggestion instead of a dependency
+- Add toggle all button to BE screenshot generator
