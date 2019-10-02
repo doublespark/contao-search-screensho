@@ -119,7 +119,7 @@ class PhantomJs {
                                 page.render('".$savePath."');
                                 console.log(JSON.stringify(response));
                                 phantom.exit();
-                            }, 200);
+                            }, 2000);
                         }
                         else
                         {
