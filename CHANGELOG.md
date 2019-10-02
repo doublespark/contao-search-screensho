@@ -18,3 +18,9 @@ Version 1.0.3 (2019-09-25)
 - Update minimum Contao version requirement to 4.6
 - Remove screenshot field from page table
 - Update README.md
+
+Version 1.0.4 (2019-10-02)
+--------------------------
+- Add flags to PhantomJS command to help dealing with errors
+- Fixed issue with pages that have broken resources
+
