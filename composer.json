@@ -11,21 +11,15 @@
   ],
   "require": {
     "php": ">=7.1",
-    "contao/core-bundle": "^4.6",
-    "jakoch/phantomjs-installer": "^2.1"
+    "contao/core-bundle": "^4.6"
+  },
+  "suggest": {
+    "jakoch/phantomjs-installer": "Allows automatic installation of PhantomJS"
   },
   "autoload": {
     "psr-4": {
       "Doublespark\\ContaoSearchScreenshot\\": "src/"
     }
-  },
-  "scripts": {
-    "post-install-cmd": [
-      "PhantomInstaller\\Installer::installPhantomJS"
-    ],
-    "post-update-cmd": [
-      "PhantomInstaller\\Installer::installPhantomJS"
-    ]
   },
   "extra": {
     "contao-manager-plugin": "Doublespark\\ContaoSearchScreenshot\\ContaoManager\\Plugin"
