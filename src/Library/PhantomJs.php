@@ -42,7 +42,7 @@ class PhantomJs {
 
         $file = $this->writeScript($url, $config, $savePath);
 
-        $cmd    = escapeshellcmd(sprintf("%s %s", $this->phantomJs, $file));
+        $cmd    = escapeshellcmd(sprintf("%s  %s", $this->phantomJs, $file));
         $result = shell_exec($cmd);
 
         $this->removeScript($file);
@@ -91,6 +91,7 @@ class PhantomJs {
         $contents = "var page = require('webpage').create();
                     var response = {};
                     page.settings.resourceTimeout = 4000;
+                    page.customHeaders = { 'User-Agent': 'Mozilla/5.0 (X11; Linux i686; rv:64.0) Gecko/20100101 Firefox/64.0' };
                     page.onResourceTimeout = function(e) {
                         response 		= e;
                         response.status = e.errorCode;
