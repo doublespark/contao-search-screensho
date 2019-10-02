@@ -14,8 +14,9 @@
             <p style="padding-left:15px;">Generating screenshots, please wait...</p>
         </div>
 
-        <div class="content">
+        <div class="content" style="border:none;">
             <?php if(count($this->arrSearchIndex) > 0): ?>
+            <div style="padding-bottom:15px; float:right;">Toggle all <input id="toggleAllCheckbox" type="checkbox" checked name="toggle-all" value="1" /></div>
             <table width="100%" border="0">
                 <thead>
                     <tr>
@@ -64,19 +65,17 @@
     #tl_search_screenshots .action-col { text-align:center; }
     #tl_search_screenshots .action-col input { display:inline-block; }
     #tl_search_screenshots table tr:hover { cursor: pointer; }
-    #tl_search_screenshots table tr.row-checked td {  background:#f2fff4; }
 </style>
 <script>
+    $$('#toggleAllCheckbox').addEvent('click', function(e){
+        var checked = e.target.checked;
+        $$('input.checkbox-input').each(function(el) {
+            el.checked = checked;
+        });
+    });
+
     $$('#tl_search_screenshots table tr').addEvent('click', function(){
         this.getElement('input').checked = !this.getElement('input').checked;
-        if(this.getElement('input').checked)
-        {
-            this.addClass('row-checked');
-        }
-        else
-        {
-            this.removeClass('row-checked');
-        }
     });
 
     var values = [];
