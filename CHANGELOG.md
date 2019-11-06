@@ -28,3 +28,9 @@ Version 1.0.5 (2019-10-02)
 --------------------------
 - Make jakoch/phantomjs-installer a suggestion instead of a dependency
 - Add toggle all button to BE screenshot generator
+
+Version 1.0.6 (2019-11-06)
+--------------------------
+- Update README.md
+- Use a symfony command run by a server cron job instead of using Contao native cron job to generate screenshots
+- Fixed issue where screenshot path isn't saved to DB if the target page has a JS error

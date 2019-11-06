@@ -1,0 +1,8 @@
+services:
+    _defaults:
+        autoconfigure: true
+    screenshot.command.cron:
+        class: Doublespark\ContaoSearchScreenshot\Command\ScreenshotCronCommand
+        arguments:
+            - "@contao.framework"
+        tags: ['console.command']

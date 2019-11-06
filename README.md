@@ -5,8 +5,9 @@ This module adds a screenshot preview of a page to the search results.
 ### PhantomJS
 PhantomJS is required in order to capture the screenshots. 
 
-Packaged with the module is an automatic installer for PhantomJS. To use it, add `PhantomInstaller\\Installer::installPhantomJS` 
-to the post install and update commands of your project's composer.json:
+To automate installing PhantomJS you can use the package `jakoch/phantomjs-installer`. Once installed, 
+add `PhantomInstaller\\Installer::installPhantomJS` to the post install and update commands of your 
+project's composer.json:
 
 ```
 "scripts": {
@@ -27,12 +28,13 @@ you do this you may need to set a custom path for PhantomJS under Settings.
 
 ## Usage
 ### Generating screenshots
-Once installed, the module will begin to automatically generate screenshots for all pages in
-the search index via a cron job. It may take a little while to generate screenshots for all pages 
-depending on the number of pages your website has.
+In order to generate the screenshots, a server cron job must be set up that
+runs the following command every minute:
 
-If you don't wish to wait, you can manually generate screenshots for all pages from the CMS backend
-under System > Search screenshots.
+`vendor/bin/contao-console search-screenshot:generate`
+
+If you don't wish to wait, you can manually trigger the generation of screenshots for all pages from 
+the CMS backend under System > Search screenshots.
 
 Screenshots will be automatically updated every 7 days.
 

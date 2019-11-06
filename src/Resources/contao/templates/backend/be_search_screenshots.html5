@@ -4,6 +4,8 @@
 
 <div id="tl_search_screenshots">
 
+    <p style="padding:0 15px;padding-top:15px;">Screenshots will automatically generate once a week. You can manually generate screenshots at any time by selecting them below and clicking "Generate selected". The "Updated" column below will show "Pending" for any screenshots currently being generated.</p>
+
     <form id="searchScreenshotForm" action="contao?do=search_screenshots&amp;ref=<?= $this->ref; ?>" class="tl_form" method="post">
 
         <div class="tl_submit_container" style="background:none;">
@@ -20,6 +22,7 @@
             <table width="100%" border="0">
                 <thead>
                     <tr>
+                        <th>Updated</th>
                         <th width="100">Screenshot</th>
                         <th>Page</th>
                         <th>URL</th>
@@ -29,6 +32,13 @@
                 <tbody>
                     <?php foreach($this->arrSearchIndex as $row): ?>
                         <tr class="row-checked">
+                            <td>
+                                <?php if($row['screenshot_last_updated'] < 1): ?>
+                                    Pending
+                                <?php else: ?>
+                                    <?= date('d/m/Y H:i', $row['screenshot_last_updated']); ?>
+                                <?php endif;?>
+                            </td>
                             <td class="screenshot" align="center" valign="center"><?php if(empty($row['screenshot'])):?>- None -<?php else: ?><img style="width:100%;height:auto;" src="<?= $row['screenshot']; ?>" /><?php endif; ?></td>
                             <td valign="center"><?= $row['title']; ?></td>
                             <td valign="center"><?= $row['url']; ?></td>

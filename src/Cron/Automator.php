@@ -38,13 +38,17 @@ class Automator extends Backend {
     {
         $lastUpdated = time() - (3600 * 24 * 7);
 
-        $objPages = Database::getInstance()->prepare('SELECT id,url FROM tl_search WHERE screenshot_last_updated < ?')->limit(2)->execute($lastUpdated);
+        $objPages = Database::getInstance()->prepare('SELECT id,url FROM tl_search WHERE screenshot_last_updated < ?')->limit(5)->execute($lastUpdated);
 
         while($objPages->next())
         {
             $imgPath = $this->fetchScreenshot($objPages->url);
             Database::getInstance()->prepare('UPDATE tl_search SET screenshot=?, screenshot_last_updated=? WHERE id=?')->execute($imgPath, time(), $objPages->id);
         }
+
+        // Purge search results
+        $objFolder = new Folder('var/cache/prod/contao/search');
+        $objFolder->purge();
     }
 
     /**
@@ -86,7 +90,7 @@ class Automator extends Backend {
         try {
             $result = $phantomJs->capture($pageUrl, $config, TL_ROOT.'/web/'.$savePath);
         } catch(\Exception $e) {
-            echo $e->getMessage();
+            $this->logger->log(LogLevel::ERROR, 'Could not create screenshot: '.$e->getMessage(), array('contao' => new ContaoContext(__METHOD__, TL_ERROR)));
         }
 
         $arrAllowedStatus = [200,301,302];
@@ -102,12 +106,24 @@ class Automator extends Backend {
             if(isset($result['errorString']))
             {
                 $this->logger->log(LogLevel::ERROR, 'Could not create screenshot: '.$result['errorString'], array('contao' => new ContaoContext(__METHOD__, TL_ERROR)));
+                return;
             }
             else
             {
                 if(isset($result['statusText']))
                 {
                     $this->logger->log(LogLevel::ERROR, 'Could not create screenshot: '.$result['statusText'], array('contao' => new ContaoContext(__METHOD__, TL_ERROR)));
+                }
+                else
+                {
+                    if(file_exists(TL_ROOT.'/web/'.$savePath))
+                    {
+                        return $savePath;
+                    }
+                    else
+                    {
+                        $this->logger->log(LogLevel::ERROR, 'Could not create screenshot: Unknown error', array('contao' => new ContaoContext(__METHOD__, TL_ERROR)));
+                    }
                 }
             }
 

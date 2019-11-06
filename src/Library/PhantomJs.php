@@ -116,6 +116,9 @@ class PhantomJs {
                          width: ".$config->getViewportWidth().",
                          height: ".$config->getViewportHeight().",
                     };
+                    page.onError = function(msg){
+                        console.log(msg);
+                    }
                     page.open('".$url."', function(status) {                       
                         if(status === 'success')
                         {

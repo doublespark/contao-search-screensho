@@ -2,6 +2,7 @@
 
 namespace Doublespark\ContaoSearchScreenshot\BackendModules;
 use Contao\BackendModule;
+use Contao\Database;
 use Contao\Input;
 use Contao\System;
 use Doublespark\ContaoSearchScreenshot\Cron\Automator;
@@ -25,17 +26,12 @@ class ModuleSearchScreenshots extends BackendModule {
         {
             $ids = Input::get('ids');
 
-            if(empty($ids))
+            if(!empty($ids))
             {
-                exit();
+                $arrIds = explode(',',$ids);
+
+                Database::getInstance()->prepare('UPDATE tl_search SET screenshot_last_updated=? WHERE id IN('.implode(',',$arrIds).')')->execute(0);
             }
-
-            $arrIds = explode(',',$ids);
-
-            $objAutomator = new Automator();
-            $objAutomator->updateScreenshotsById($arrIds);
-
-            exit();
         }
 
         $container = System::getContainer();

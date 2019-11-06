@@ -3,8 +3,6 @@
 /**
  * Cron jobs
  */
-$GLOBALS['TL_CRON']['minutely']['updateScreenshots'] = ['Doublespark\ContaoSearchScreenshot\Cron\Automator', 'updateScreenshots'];
-
 $GLOBALS['BE_MOD']['system']['search_screenshots'] = ['callback'=> 'Doublespark\ContaoSearchScreenshot\BackendModules\ModuleSearchScreenshots'];
 
 $GLOBALS['TL_PURGE']['folders']['search_screenshots'] = [
