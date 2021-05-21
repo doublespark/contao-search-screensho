@@ -76,7 +76,7 @@ class Automator extends Backend {
     protected function fetchScreenshot($pageUrl)
     {
         $phantomJs = new PhantomJs();
-        $phantomJs->setPhantomJsPath(TL_ROOT.Config::get('phantomjs_path'));
+        $phantomJs->setPhantomJsPath(Config::get('phantomjs_path'));
 
         $config = new CaptureConfig();
         $config->setViewport(Config::get('screenshot_viewport_w'),Config::get('screenshot_viewport_h'));

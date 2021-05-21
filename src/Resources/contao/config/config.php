@@ -13,6 +13,6 @@ $GLOBALS['TL_PURGE']['folders']['search_screenshots'] = [
 /**
  * Default configuration
  */
-$GLOBALS['TL_CONFIG']['phantomjs_path']        = '/vendor/bin/phantomjs';
+$GLOBALS['TL_CONFIG']['phantomjs_path']        = 'phantomjs';
 $GLOBALS['TL_CONFIG']['screenshot_viewport_w'] = 1600;
 $GLOBALS['TL_CONFIG']['screenshot_viewport_h'] = 850;
