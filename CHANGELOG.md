@@ -39,3 +39,7 @@ Version 1.0.7 (2021-05-21)
 --------------------------
 - Remove root from PhantomJS path
 - Change default PhantomJS path
+
+Version 1.0.8 (2021-05-21)
+--------------------------
+- Initialize contao in cron command
