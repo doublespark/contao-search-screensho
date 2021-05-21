@@ -33,6 +33,8 @@ class ScreenshotCronCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $this->framework->initialize();
+
         $output->writeln('Generating screenshots...');
 
         $automator = new Automator();
